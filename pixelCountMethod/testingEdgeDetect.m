@@ -1,6 +1,7 @@
+I = rgb2gray(I);
 [~, threshold] = edge(I,'sobel');
 fudgeFactor = 0.5;
-BWs = edge(gray,'sobel',threshold * fudgeFactor);
+BWs = edge(I,'sobel',threshold * fudgeFactor);
 figure, imshow(BWs), title('binary gradient mask');
 
 se90 = strel('line', 3, 90);
