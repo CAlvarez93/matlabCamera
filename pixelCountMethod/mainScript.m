@@ -5,6 +5,16 @@ load('goproParams.mat');
 % read in image, turn black and white, edge detect,
 % give array of true, false of object
 rawImage = 'GOPR0164.JPG';
+
+I = imread(rawImage,'jpg');
+I = undistortImage(I,cameraParams);
+I = rgb2gray(I);
+figure, imshow(I), title('original image');
+
+% Use filterColors to isolate the green value in an image.
+% This is overwrite the I calculated before.
+filterColors 
+
 testingEdgeDetect;
 
 % calculate pixel x-axis pixel count for every y-axis pixel

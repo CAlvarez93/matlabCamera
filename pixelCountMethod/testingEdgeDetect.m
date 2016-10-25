@@ -1,9 +1,4 @@
-I = imread(rawImage,'jpg');
-I = undistortImage(I,cameraParams);
-gray = rgb2gray(I);
-figure, imshow(gray), title('original image');
-
-[~, threshold] = edge(gray,'sobel');
+[~, threshold] = edge(I,'sobel');
 fudgeFactor = 0.5;
 BWs = edge(gray,'sobel',threshold * fudgeFactor);
 figure, imshow(BWs), title('binary gradient mask');
