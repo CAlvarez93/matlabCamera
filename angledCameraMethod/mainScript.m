@@ -1,14 +1,20 @@
-clc
-clear all
-close all
+%% Comment out for batch testing
+%clc
+%clear all
+%close all
 
-%findTest;
+%image_filename = '5.JPG';
 
-image_filename = '5.JPG';
+%% Comment out when running normally
+fname = '.JPG';
+argv = int2str(arg);
+image_filename = strcat(argv,fname);
+
+
 %% read in image
 %
 I = imread(image_filename,'jpg');
-figure, imshow(I), title('original image');
+%figure, imshow(I), title('original image');
 
 %% filter colors
 %    mask green as black
@@ -20,8 +26,8 @@ filterColors;
 testingEdgeDetect;
 
 %% calculate y-axis pixel count for the tallest column
-%postProcess;
+postProcess;
 
 %% 
 % give the average width of each major x-axis width
-%findMajorValues;
+findMajorValues;

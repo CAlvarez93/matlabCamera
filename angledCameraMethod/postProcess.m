@@ -6,17 +6,17 @@
 %   Assigns a skew value based on the image angle, which will be used to
 %   multiply the height processed later.
 
-distance = Globals('distance');         % distance from object (supplied by LiDAR)
+%distance = Globals('distance');         % distance from object (supplied by LiDAR)
+distance = input_dist;
 cam_height = Globals('camera_height');  % height of the camera
 cam_angle = Globals('camera_angle');    % angle of the camera from horizontal to ground
-height_skew_factor = Globals('height_skew_factor');  % pixel to inch skew factor
 
 [py,px] = size(BWfinal);               % size of the image in pixels
 midX = px/2;
 midY = py/2;
 
 print_pixel_counts = sprintf('px: %d\npy: %d\nmidX: %d\nmidY: %d',px,py,midX,midY);
-disp(print_pixel_counts);
+%disp(print_pixel_counts);
 
 max_fudge = 500;
 pixel_buffer_true = max_fudge;
@@ -40,12 +40,9 @@ for i=1:py
 end
 
 out = sprintf('x: %d\ny: %d', highest_x, highest_y);
-disp(out);
+%disp(out);
 
-
-height = abs(highest_y - midY);
-
-
+height = midY - highest_y;
 
 % for j=600:2000
 %     

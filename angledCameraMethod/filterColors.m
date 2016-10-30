@@ -32,4 +32,4 @@ black_plain = find((g <= base_green & b <= base_blue & r <= base_red) & (~(g-b >
 
 %% display results
 I = cat(3,r,g,b);
-figure, imshow(I), title('colors stripped');
+%figure, imshow(I), title('colors stripped');
