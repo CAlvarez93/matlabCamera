@@ -2,7 +2,8 @@ clc
 clear all
 close all
 
-label = sprintf('obj height,skew factor,distance');
+label = sprintf('obj height,skew factor,distance,a');
+%label = sprintf('pixel height');
 disp(label);
 
 arr = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 20 25 30];

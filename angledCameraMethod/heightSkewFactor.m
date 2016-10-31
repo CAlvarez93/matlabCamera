@@ -10,8 +10,10 @@ function [ output_args ] = heightSkewFactor(arg, height)
         output_args = specialCase(height);
     elseif ((abs(height) < 100))
         output_args = lt100(height);
+    elseif(height < 0)
+        output_args = negative(height);
     else
-        output_args = exponential(height);
+        output_args = positive(height);
     %elseif ((abs(height) < 300))
         %output_args = lt300(height);
     %elseif ((abs(height) < 400))
@@ -34,7 +36,13 @@ end
 %% SpecialCase
 % currently outputs 0 because it is so close to the middle of the image
 function [ output_args ] = specialCase(height)
-    output_args = 0;
+    sc = 5.1;
+    
+    if (height > 0 )
+        sc = sc * -1;
+    end
+    
+    output_args = sc;
 end
 
 %% lt100
@@ -53,17 +61,21 @@ function [ output_args ] = lt100(height)
     output_args = lt;
 end
 
-%% exponential
-% exponential model for data
-function [ output_args ] = exponential(height)
+%% negative
+% skew factor for negative pixel heights
+function [ output_args ] = negative(height)
 
-    expo = (0.2552*exp(0.0026*height)) - 0.024024170;
-    
-    if (height > 0)
-       expo = 0.1914*log(height) - 1.193; 
-    end
-    
-    output_args = expo;
+    n = (4*10^(-7))*(height)^2 + (0.0005)*(height) + (0.228);
+    %expo = (0.2552*exp(0.0026*height)) - 0.024024170;    
+    output_args = n;
+end
+
+%% positive
+% skew factor for positive pixel heights
+function [ output_args ] = positive(height)
+    p = 0.1896*log(height) - 1.1847; 
+    %expo = (0.2552*exp(0.0026*height)) - 0.024024170;    
+    output_args = p;
 end
 
 %% Linear

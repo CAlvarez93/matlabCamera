@@ -1,6 +1,5 @@
+%%
 I = rgb2gray(I);
-%figure, imshow(I), title('original image');
-
 [~, threshold] = edge(I,'sobel');
 fudgeFactor = .5;
 BWs = edge(I,'sobel',threshold * fudgeFactor);
@@ -12,12 +11,14 @@ BWsdil = imdilate(BWs, [se90 se0]);
 %figure, imshow(BWsdil), title('dilated gradient mask');
 
 BWdfill = imfill(BWsdil, 'holes');
-%figure, imshow(BWdfill);
-%title('binary image with filled holes');
+%figure, imshow(BWdfill), title('binary image with filled holes');
 
+%% took this out because if the primary object is too slim, it will
+%  be removed entirely
 %BWnobord = imclearborder(BWdfill, 4);
 %figure, imshow(BWnobord), title('cleared border image');
 
+%% 
 %seD = strel('diamond',10);
 seD = strel('diamond',6);
 BWfinal = imerode(BWdfill,seD);
@@ -31,16 +32,3 @@ BWoutline = bwperim(BWfinal, 4);
 Segout = I;
 Segout(BWoutline) = 255;
 %figure, imshow(Segout), title('outlined original image');
-
-[size_y, size_x] = size(BWoutline);
-% crop the sides out of the image in binary format
-for i=1:size_y
-    for j=1:size_x/4
-        BWoutline(i,j) = 0;
-    end
-    for j=3*size_x/4:size_x
-        BWoutline(i,j) = 0;
-    end
-end
-
-%figure, imshow(BWoutline), title('perimetered - cropped');

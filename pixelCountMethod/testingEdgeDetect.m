@@ -10,7 +10,7 @@ BWsdil = imdilate(BWs, [se90 se0]);
 figure, imshow(BWsdil), title('dilated gradient mask');
 
 BWdfill = imfill(BWsdil, 'holes');
-figure, imshow(BWdfill);
+figure, imshow(BWdfill),
 % title('binary image with filled holes');
 
 BWnobord = imclearborder(BWdfill, 4);
