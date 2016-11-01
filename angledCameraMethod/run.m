@@ -5,7 +5,7 @@ close all
 dirname = 'test_images/';
 fname = '.JPG';
 
-label = sprintf('obj height,pixel height,skew factor,distance');
+label = sprintf('Actual Height, Calculated Height, Pixel Height, Actual Skew Factor, Calculated Skew Factor, Percent Error, Distance');
 %label = sprintf('pixel height');
 disp(label);
 
@@ -22,8 +22,11 @@ for arg=1:30
    
   mainScript
   
+  % run error checking
+  [sf, pe ] = sfCheck(h, 37.5, a, cam_height, skew_factor);
+  
   % print object height
-  print_out = sprintf('%d, %d, %d, %d',obj_height,h,skew_factor,distance);
+  print_out = sprintf('%d, %d, %d, %d, %d, %d, %d', 37.5, obj_height, h, sf, skew_factor, pe, distance);
 %   print_out = sprintf('%d',h);
   disp(print_out);
 end
@@ -40,8 +43,11 @@ for arg=31:60
   
   mainScript
   
+  % run error checking
+  [sf, pe ] = sfCheck(h, 25.75, a, cam_height, skew_factor);
+  
   % print object height
-  print_out = sprintf('%d, %d, %d, %d',obj_height,h,skew_factor,distance);
+  print_out = sprintf('%d, %d, %d, %d, %d, %d, %d', 37.5, obj_height, h, sf, skew_factor, pe, distance);
 %   print_out = sprintf('%d',h);
   disp(print_out);
 end
@@ -58,8 +64,11 @@ for arg=61:90
   
   mainScript
   
+  % run error checking
+  [sf, pe ] = sfCheck(h, 42.25, a, cam_height, skew_factor);
+  
   % print object height
-  print_out = sprintf('%d, %d, %d, %d',obj_height,h,skew_factor,distance);
+  print_out = sprintf('%d, %d, %d, %d, %d, %d, %d', 37.5, obj_height, h, sf, skew_factor, pe, distance);
 %   print_out = sprintf('%d',h);
   disp(print_out);
 end
