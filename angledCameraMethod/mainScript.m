@@ -1,20 +1,3 @@
-%% Comment out for batch testing
-% clc
-% clear all
-% close all
-% 
-% dirname = 'test_images/';
-% image = '5.JPG';
-% image_filename = strcat(dirname, image);
-
-
-%% Comment out when running normally
-dirname = 'test_images/';
-fname = '.JPG';
-argv = int2str(arg);
-temp = strcat(dirname, argv);
-image_filename = strcat(temp,fname);
-
 %% Define input variables
 %distance = Globals('distance');         % distance from object (supplied by LiDAR)
 distance = input_dist;

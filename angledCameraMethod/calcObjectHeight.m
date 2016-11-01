@@ -6,7 +6,7 @@
 %% Define variables
 
 % pixel to inch skew factor
-skew_factor = heightSkewFactor('quadratic', height);  
+skew_factor = heightSkewFactor(height);  
 h = height; % pixel height
 
 %d = sprintf('pixel height: %d', h);
@@ -35,6 +35,6 @@ d = sprintf('obj_height: %d',obj_height);
 globals_print = sprintf('distance: %d\ncam_height: %d\ncam_angle: %d\nskew_factor: %d', distance, cam_height, cam_angle, skew_factor);
 %disp(globals_print);
 
-% print object height
-print_out = sprintf('%d, %d, %d, %d',obj_height,skew_factor,distance, a);
-disp(print_out);
+% % print object height
+% print_out = sprintf('%d, %d, %d, %d',obj_height,skew_factor,distance, a);
+% disp(print_out);
