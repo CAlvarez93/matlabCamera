@@ -3,14 +3,18 @@
 %   to determine the skew factor from
 %   the pixel height
 %   Formulas obtained from many tests
-function [ output_args ] = heightSkewFactor(height)
+function [ output_args ] = heightSkewFactor(dist, height)
     
-    if ((abs(height) < 10))
-        output_args = specialCase(height);
+    if (height >= 0)
+        output_args = pos(dist, height);
     elseif(height < 0)
-        output_args = negative(height);
-    else
-        output_args = positive(height);
+%         p = pos(height);
+%         output_args = -1*p;
+        output_args = neg(dist, height);
+%     elseif(height < 0)
+%         output_args = negative(height);
+%     else
+%         output_args = positive(height);
     end
 end
 
@@ -19,13 +23,44 @@ end
 function [ output_args ] = specialCase(height)
     sc = 3.0171*height - 23.116;
     
-    if (height <= 0 )
-        sc = sc * -1;
-    end
+%     if (height <= 0 )
+%         sc = sc * -1;
+%     end
     
     output_args = sc;
 end
 
+%% Pos
+function [ output_args ] = pos(dist, height)
+    if (dist >= 15)
+      output_args = (0.0126*log(height) - 0.0513);
+    else
+      output_args = (0.0113*log(height) - 0.0635);
+    end
+end
+
+%% Neg
+function [ output_args ] = neg(dist, height)
+
+% n = (1*10^(-6))*height^2 + 0.0007*height + 0.1013;
+% disp(n);
+n = 0.0746*exp(0.0053*height);
+% n = (1*10^(-6))*height^2 + 0.0007*height + 0.1013;
+if (height < -340)
+   n = n + .003;
+elseif (height <= -300)
+    n = n;
+elseif (height < -150 && height > -300)
+    n = n - .01;
+elseif(height < -10)
+    n = n + .02;
+end
+
+if (dist >= 15)
+   n = n + .2; 
+end
+output_args = n;
+end
 %% negative
 % skew factor for negative pixel heights
 function [ output_args ] = negative(height)
@@ -60,25 +95,25 @@ end
 % skew factor for positive pixel heights
 function [ output_args ] = positive(height)
 
-    if (height <= 10)
+    if (abs(height) <= 10)
        p = 3.0171*height - 23.116;
-    elseif (height <= 50)
+    elseif (abs(height) <= 50)
        p = -.65;
-    elseif (height <= 100)
+    elseif (abs(height) <= 100)
        p = 0.0101*height - 1.1249;
-    elseif (height <= 200)
+    elseif (abs(height) <= 200)
        p = 0.0015*height - 0.4237;
-    elseif (height <= 300)
+    elseif (abs(height) <= 300)
        p = 0.0005*height - 0.2453;
-    elseif (height <= 400)
+    elseif (abs(height) <= 400)
        p = -.044;
-    elseif (height <= 500)
+    elseif (abs(height) <= 500)
        p = -.034;
-    elseif (height <= 600)
+    elseif (abs(height) <= 600)
        p = .0001*height - .0993;
-    elseif (height <= 700)
+    elseif (abs(height) <= 700)
        p = -.022;
-    elseif (height > 700)
+    elseif (abs(height) > 700)
        p = (2*10^(-5))*height - 0.028;
     end
     

@@ -6,7 +6,7 @@
 %% Define variables
 
 % pixel to inch skew factor
-skew_factor = heightSkewFactor(height);  
+skew_factor = heightSkewFactor(input_dist, height);  
 h = height; % pixel height
 
 %d = sprintf('pixel height: %d', h);
