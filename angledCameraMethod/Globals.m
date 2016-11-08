@@ -14,14 +14,14 @@ end
 %Retrieves the camera height
 %   outputs the height of the camera
 function [ output_args ] = camera_height()
-    output_args = 43.75;
+    output_args = 62;
 end
 
 %% camera_angle
 %   outputs the angle of the
 %   camera from horizontal
 function [ output_args ] = camera_angle()
-    output_args = 45;
+    output_args = 30;
 end
 
 %% distance
