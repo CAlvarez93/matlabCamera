@@ -10,14 +10,22 @@ It utilizes the 'Arduino Wire Library'
 #define    MeasureValue        0x04          // Value to initiate ranging.
 #define    RegisterHighLowB    0x8f          // Register to get both High and Low bytes in 1 call.
 
+int wait4TransmitTime = 20; //in usec
+
 int reading = 0;
 int average = 0;
 int count = 0;
+double speedofRada = 0;
+double widthOfObject = 0;
+double distance = 0;
 
 void setup()
 {
   Wire.begin(); // join i2c bus
   Serial.begin(9600); // start serial communication at 9600bps
+  Serial.print("What is the speed of RADA? ");
+  while(!Serial.available());
+  speedofRada =  double(Serial.read());
 }
 
 void loop()
@@ -42,7 +50,12 @@ void loop()
     reading = Wire.read(); // receive high byte (overwrites previous reading)
     reading = reading << 8; // shift high byte to be high 8 bits
     reading |= Wire.read(); // receive low byte as lower 8 bits
-    if(reading <= 50){
+    if(reading <= 20){
+      if(count == 0){
+        widthOfObject = 0;
+        //This is the first edge of the object
+        //send command to GoPro to shutter
+      }
       average += reading;
       count++;
       Serial.print("cur reading: "); // print the reading
@@ -51,7 +64,13 @@ void loop()
       if(count != 0)
       {
         Serial.print("avg reading: ");
-        Serial.println(average/count);
+        distance = double(average) / double(count);
+        Serial.println(distance);
+
+        //Calculate width here
+        widthOfObject = double(count * wait4TransmitTime * 0.001) * speedofRada;
+        Serial.print("width of object ");
+        Serial.println(widthOfObject);
         average = 0;
         count = 0;
       }

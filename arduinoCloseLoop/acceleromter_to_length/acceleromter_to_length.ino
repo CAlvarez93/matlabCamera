@@ -26,7 +26,7 @@
  We are also using the 400 kHz fast I2C mode by setting the TWI_FREQ  to 400000L /twi.h utility file.
  */
 #include <SPI.h>
-#include <Wire.h>   
+#include <Wire.h>  
 
 
 // See also MPU-9250 Register Map and Descriptions, Revision 4.0, RM-MPU-9250A-00, Rev. 1.4, 9/9/2013 for registers not listed in 
@@ -258,6 +258,11 @@ float ax, ay, az, gx, gy, gz, mx, my, mz; // variables to hold latest sensor dat
 float q[4] = {1.0f, 0.0f, 0.0f, 0.0f};    // vector to hold quaternion
 float eInt[3] = {0.0f, 0.0f, 0.0f};       // vector to hold integral error for Mahony method
 
+float velocityX_Y_prev = 0;
+float velocityX_Y_now = 0;
+float accelX_Y = 0;
+float time_now = 0;
+float time_prev = 0;
 
 void setup()
 {
@@ -341,7 +346,24 @@ void loop()
       //acceleration in Mili g's
       //gyroscope in deg/sec
       //magnetometer in Mili g's
-      Serial.println((int)(ax*1000));
+//      ax = ax * 9.80665;
+//      ay = ay * 9.80665;
+      ay = 0;
+      if((ax + ay) <= 0)
+        accelX_Y = float((-1) * sqrt(sq(ax) + sq(ay)));
+      else
+        accelX_Y = float(sqrt(sq(ax) + sq(ay)));
+      time_now = float(millis()/1000.0) - time_prev;
+      time_prev = time_now;
+      velocityX_Y_prev = ax * time_now;
+      velocityX_Y_now = velocityX_Y_now + velocityX_Y_prev;
+      delay(100);
+      Serial.print("current accel (ax): ");
+      Serial.print(ax);
+      Serial.print("\tcurrent velocity: ");
+      Serial.println(velocityX_Y_now);
+      
+//      Serial.println((int)(ax*1000));
 //      Serial.println((int)(ay*1000));
 //      Serial.println((int)(az*1000));
        
