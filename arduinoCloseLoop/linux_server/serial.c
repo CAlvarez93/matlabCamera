@@ -108,6 +108,9 @@ if (fd < 0)
 
 char buf[BUFSIZE];
 int n;
+
+printf("buf: $%s$\nnull: $%s$\n", buf, NULL);
+
 while (1){
   while(strcmp(buf, NULL) == 0) n = read(fd, buf, BUFSIZE);
   if (strcmp(buf, "t") != 0) break;
