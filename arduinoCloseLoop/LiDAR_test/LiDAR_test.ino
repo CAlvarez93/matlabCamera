@@ -22,7 +22,7 @@ double distance = 0;
 void setup()
 {
   Wire.begin(); // join i2c bus
-  Serial.begin(9600); // start serial communication at 9600bps
+  Serial.begin(38400); // start serial communication at 9600bps
   Serial.print("What is the speed of RADA? ");
   while(!Serial.available());
   speedofRada =  double(Serial.read());
@@ -59,18 +59,18 @@ void loop()
       }
       average += reading;
       count++;
-      Serial.print("cur reading: "); // print the reading
-      Serial.println(reading);
+//      Serial.print("cur reading: "); // print the reading
+//      Serial.println(reading);
     }else{
       if(count != 0)
       {
-        Serial.print("avg reading: ");
+//        Serial.print("avg reading: ");
         distance = double(average) / double(count);
         Serial.println(distance);
 
         //Calculate width here
         widthOfObject = double(count * wait4TransmitTime * 0.001) * speedofRada;
-        Serial.print("width of object ");
+//        Serial.print("width of object ");
         Serial.println(widthOfObject);
         average = 0;
         count = 0;

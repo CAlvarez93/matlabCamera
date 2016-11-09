@@ -351,6 +351,8 @@ void loop()
       time_now = float(millis() * 0.001) - time_prev;
       time_prev = time_now;
       velocityX_Y_prev = ax * time_now;
+      if(abs(velocityX_Y_prev) <= 0.01)
+        velocityX_Y_prev = 0;
       velocityX_Y_now = velocityX_Y_now + velocityX_Y_prev;
       delay(100);
       Serial.print("current accel (ax): ");

@@ -103,7 +103,7 @@ int fd = open (portname, O_RDWR | O_NOCTTY | O_SYNC);
 if (fd < 0)
 {
 		//error_message ("error %d opening %s: %s", errno, portname, strerror (errno));
-		return;
+		return 0;
 }
 
 char buf[BUFSIZE];
