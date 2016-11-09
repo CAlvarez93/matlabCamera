@@ -88,8 +88,9 @@ set_blocking (int fd, int should_block)
         tty.c_cc[VMIN]  = should_block ? 1 : 0;
         tty.c_cc[VTIME] = 5;            // 0.5 seconds read timeout
 
-        //if (tcsetattr (fd, TCSANOW, &tty) != 0)
-                //error_message ("error %d setting term attributes", errno);
+        if (tcsetattr (fd, TCSANOW, &tty) != 0)
+			printf("error %d setting term attributes", errno);
+			//error_message ("error %d setting term attributes", errno);
 }
 
 
@@ -99,20 +100,20 @@ main(){
 char *portname = "/dev/cu.usbmodem1421";
 
 int fd = open (portname, O_RDWR | O_NOCTTY | O_SYNC);
-//if (fd < 0)
-//{
-        //error_message ("error %d opening %s: %s", errno, portname, strerror (errno));
-//        return;
-//}
+if (fd < 0)
+{
+		//error_message ("error %d opening %s: %s", errno, portname, strerror (errno));
+		return;
+}
 
 char buf[BUFSIZE];
 int n;
 while (1){
-  while(buf[0] == NULL) n = read(fd, buf, BUFSIZE);
-  if (strcmp(buf, "t")) break;
+  while(strcmp(buf, NULL) == 0) n = read(fd, buf, BUFSIZE);
+  if (strcmp(buf, "t") != 0) break;
 }
 
-set_interface_attribs (fd, B115200, 0);  // set speed to 115,200 bps, 8n1 (no parity)
+set_interface_attribs (fd, B38400, 0);  // set speed to 115,200 bps, 8n1 (no parity)
 set_blocking (fd, 0);                    // set no blocking
 
 parse_arduino_input(buf);
