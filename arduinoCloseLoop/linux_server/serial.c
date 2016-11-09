@@ -108,7 +108,7 @@ int fd = open (portname, O_RDWR | O_NOCTTY | O_SYNC);
 char buf[BUFSIZE];
 int n;
 while (1){
-  n = read(fd, buf, BUFSIZE);
+  while(buf[0] == NULL) n = read(fd, buf, BUFSIZE);
   if (strcmp(buf, "t")) break;
 }
 
