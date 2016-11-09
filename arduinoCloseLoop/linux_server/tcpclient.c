@@ -11,7 +11,7 @@
 #include <netinet/in.h>
 #include <netdb.h> 
 
-#define BUFSIZE 8
+#define BUFSIZE 15
 
 /* 
  * error - wrapper for perror
@@ -19,6 +19,17 @@
 void error(char *msg) {
     perror(msg);
     exit(0);
+}
+
+/*
+ * int to string
+ */ 
+char * intToStr(uint16_t in){
+  char str[BUFSIZE];
+  sprintf(str, "%d", in);
+  char *out = malloc(strlen(str) * sizeof(char));
+  strcpy(out, str);
+  return out; 
 }
 
 int main(int argc, char **argv) {
@@ -66,27 +77,34 @@ fflush( stdout );
     if (connect(sockfd, (const struct sockaddr *) &serveraddr, sizeof(serveraddr)) < 0) 
       error("ERROR connecting");
 
-    printf("connected to server\n");
-fflush( stdout );
-    /* get distance/width */
-    bzero(buf, BUFSIZE);
-    uint32_t dist = 0x0050;
-    uint32_t width = 0x1150;
-/*
-    buf[0] = (dist >> 24) & 0xFF;
-    buf[1] = (dist >> 16) & 0xFF;
-    buf[2] = (dist >> 8) & 0xFF;
-    buf[3] = dist & 0xFF;
-    buf[4] = (width >> 24) & 0xFF;
-    buf[5] = (width >> 16) & 0xFF;
-    buf[6] = (width >> 8) & 0xFF;
-    buf[7] = width & 0xFF;
-    
-    printf("made buf\n");
+printf("connected to server\n");
 fflush( stdout );
 
-*/
-strcpy(buf, "abcde");
+    /* get distance/width */
+    bzero(buf, BUFSIZE);
+    uint32_t dist = 50;
+    uint32_t width = 5;
+    
+//    char *p;
+//    char *d = intToStr(dist);
+//    char *w = intToStr(width);
+//    char *msg = malloc(BUFSIZE * sizeof(char));
+//    char *msg_start = 
+
+//    for ( p = *d; *p != 0; p++ ) {
+//      printf("%c\n", *p);
+//    }
+
+
+    char *db = intToStr(dist);
+    char *wb = intToStr(width);
+
+    printf("db: %s\nwb: %s\n", db, wb);
+    
+    strcpy(buf, strcat( strcat(db, "\n"), wb) );
+  
+
+//strcpy(buf, "abcde");
 
     /* send the message line to the server */
     n = write(sockfd, buf, strlen(buf));

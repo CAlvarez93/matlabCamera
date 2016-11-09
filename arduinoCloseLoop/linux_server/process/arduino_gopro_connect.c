@@ -13,7 +13,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#define BUFSIZE 15
+#define BUFSIZE 8
 
 #if 0
 /* 
@@ -47,10 +47,9 @@ struct hostent {
 }
 #endif
 
-
 struct data {
-   uint16_t distance;
-   uint16_t width;
+   uint32_t distance;
+   uint32_t width;
 };
 
 struct data *dat;
@@ -64,14 +63,20 @@ void error(char *msg) {
 }
 
 void parse_arduino_input(char *buf){
+  uint32_t dist;
+  uint32_t width;
+  
+  dist = (uint32_t) (buf[3] << 24);
+  dist = (uint32_t) dist | (buf[2] << 16);
+  dist = (uint32_t) dist | (buf[1] << 8);
+  dist = (uint32_t) dist | buf[0];
+  dat->distance = dist;
 
-  char *params = strtok ( buf, "\n" );
-  printf("dist: %s\n", params);
-  dat->distance = (uint16_t) strtol(params, (char **)NULL, 10);
-
-  params = strtok ( NULL, "\n" );
-  printf("width: %s\n", params);
-  dat->width = (uint16_t) strtol(params, (char **)NULL, 10);
+  width = (uint32_t) (buf[7] << 24);
+  width = (uint32_t) width | (buf[6] << 16);
+  width = (uint32_t) width | (buf[5] << 8);
+  width = (uint32_t) width | buf[4];
+  dat->width = width;
 }
 
 int main(int argc, char **argv) {
@@ -82,12 +87,7 @@ int main(int argc, char **argv) {
 //  int childfd_gopro; /* child socket */
 
   char buf[BUFSIZE]; /* message buffer */
-  char send[2] = "1";
-
-
-  dat = (struct data *) malloc(sizeof(struct data));
-  dat->distance = 0;
-  dat->width = 0;
+  char send[1];
 
 
   /* 
@@ -193,33 +193,26 @@ int main(int argc, char **argv) {
     /***************************************************/
     /* Receive data from arduino */
     int n; /* message byte size */
-
  printf("before read\n");
  fflush(stdout);
-
     /* 
      * read: read input string from the arduino
      */
     bzero(buf, BUFSIZE);
     n = read(childfd_arduino, buf, BUFSIZE);
-
-printf("received buf: %s\n", buf);
+printf("after read\n");
 fflush(stdout);
-
     if (n < 0) 
       error("ERROR reading from socket");
-    
-printf("received child data\n");
-fflush(stdout);
-
+    printf("received child data\n");
+    fflush(stdout);
     /* End Receive data from arduino */
     /***************************************************/
-    char *buff = malloc(BUFSIZE * sizeof(char));
-    strcpy(buff, buf);
+    
     /*
      * parse data received from the arduino
      */
-    parse_arduino_input(buff);
+    parse_arduino_input(buf);
     
     printf("parsed child data\n");
     /*
@@ -247,6 +240,7 @@ fflush(stdout);
      */
     
     
+
     /* 
      * write: tell arduino to reconnect to the gopro
      */

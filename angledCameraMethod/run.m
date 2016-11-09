@@ -9,12 +9,12 @@ label = sprintf('Actual Height, Calculated Height, A, Pixel Height, Actual Skew 
 %label = sprintf('pixel height');
 disp(label);
 
-object_height = [ 25.75 42.25 ];
+object_height = [ 37.5 25.75 42.25 ];
 
-% arr = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30];
-arr = [16 18 20 22 24 26 28 30];
+arr = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30];
+%arr = [16 18 20 22 24 26 28 30];
 
-for arg=1:8
+for arg=1:10
     
   % file
   argv = int2str(arg);

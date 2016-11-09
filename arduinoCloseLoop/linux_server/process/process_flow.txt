@@ -1,0 +1,17 @@
+1. connect to arduino
+      a. receive LiDAR data from arduino
+      b. disconnect
+
+2. connect to GoPro
+      a. download latest picture taken - place into matlab directory
+      b. delete picture off GoPro
+      c. disconnect
+
+3. run matlab scripts
+      a. Delete pictures out of image folder
+
+4. connect to arduino
+      a. Tell ardunio to connect to GoPro
+      b. disconnect
+
+Repeat
