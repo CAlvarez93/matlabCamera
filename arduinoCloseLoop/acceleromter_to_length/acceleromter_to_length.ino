@@ -348,11 +348,6 @@ void loop()
       //magnetometer in Mili g's
 //      ax = ax * 9.80665;
 //      ay = ay * 9.80665;
-      ay = 0;
-      if((ax + ay) <= 0)
-        accelX_Y = float((-1) * sqrt(sq(ax) + sq(ay)));
-      else
-        accelX_Y = float(sqrt(sq(ax) + sq(ay)));
       time_now = float(millis()/1000.0) - time_prev;
       time_prev = time_now;
       velocityX_Y_prev = ax * time_now;
