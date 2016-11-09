@@ -346,9 +346,9 @@ void loop()
       //acceleration in Mili g's
       //gyroscope in deg/sec
       //magnetometer in Mili g's
-//      ax = ax * 9.80665;
-//      ay = ay * 9.80665;
-      time_now = float(millis()/1000.0) - time_prev;
+      ax = ax * 9.80665 * 0.001;
+      ay = ay * 9.80665;
+      time_now = float(millis() * 0.001) - time_prev;
       time_prev = time_now;
       velocityX_Y_prev = ax * time_now;
       velocityX_Y_now = velocityX_Y_now + velocityX_Y_prev;

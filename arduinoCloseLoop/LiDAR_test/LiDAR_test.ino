@@ -50,11 +50,12 @@ void loop()
     reading = Wire.read(); // receive high byte (overwrites previous reading)
     reading = reading << 8; // shift high byte to be high 8 bits
     reading |= Wire.read(); // receive low byte as lower 8 bits
-    if(reading <= 20){
+    if(reading <= 50){
       if(count == 0){
         widthOfObject = 0;
         //This is the first edge of the object
         //send command to GoPro to shutter
+        Serial.println("t");
       }
       average += reading;
       count++;

@@ -1,15 +1,16 @@
+
 /**********************************************************************************
 * ESP8266 REMOTE for GoPro by Robert Stefanowicz - euerdesign.de 28 Dec 2015 *
 *********************************************************************************/
-
+#include <SPI.h>
 #include <WiFi.h>
 
 /*********************************
 * YOUR SETTINGS *
 *********************************/
 
-const char* ssid = "Go1337Pro"; //Your Wifi name (SSID)
-const char* password = "PASSWORD"; //Your WiFi password
+char* ssid = "Alvarez_net"; //Your Wifi name (SSID)
+char* password = "B901F3E1"; //Your WiFi password
 /*********************************
 * DO NOT CHANGE BELOW THIS LINE *
 *********************************/
