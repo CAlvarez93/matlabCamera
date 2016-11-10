@@ -19,9 +19,11 @@ testingEdgeDetect;
 % calculate pixel x-axis pixel count for every y-axis pixel
 % of the object
 postProcess;
-% figure;
-% subplot(2,1,1);scatter(1:length(width),width);title('width');
-% subplot(2,1,2);scatter(1:length(width_position),width_position);title('width position (height)');
+% Pause is for the sake of presentations
+pause(5);
+figure;
+subplot(2,1,1);scatter(1:length(width),width);title('width');
+subplot(2,1,2);scatter(1:length(width_position),width_position);title('width position (height)');
 
 
 % give the average width of each major x-axis width
@@ -30,13 +32,15 @@ postProcess;
 
 % edge finder script
 edgeFinder;
-% figure;
-% subplot(2,1,1);
-% scatter(1:length(major_points_width),major_points_width);
-% title('major points width');
-% subplot(2,1,2);
-% scatter(1:length(major_points_width_position),major_points_width_position);
-% title('major points width position');
+% Pause is for the sake of presentations
+pause(5);
+figure;
+subplot(2,1,1);
+scatter(1:length(major_points_width),major_points_width);
+title('major points width');
+subplot(2,1,2);
+scatter(1:length(major_points_width_position),major_points_width_position);
+title('major points width position');
 
 % This will provide the object_height and object_width of the object in
 % pixels
