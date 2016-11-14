@@ -2,13 +2,13 @@
 #
 # wait for RADA to send LiDAR data
 # then shove it into a csv
-./post
+#./post
 
 # pull list of images from GoPro
-curl -i -H "Accept: application/json" -H "Content-Type: application/json" http://10.5.5.9:8080/video/DCIM/GOPR0100 > dir.html
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" http://10.5.5.9:8080/videos/DCIM/100GOPRO/ > dir.html
 
 # parse list of images into text file
-cat dir.html | sed -n 's/.*\(GOPR0[0-9]+.JPG\).*/\1/p' > imglist.txt
+cat dir.html | sed -n 's/.*\(GOPR0[0-9]*.JPG\).*/\1/p' > imglist.txt
 
 # pull images off the GoPro
 # will create a list of files
