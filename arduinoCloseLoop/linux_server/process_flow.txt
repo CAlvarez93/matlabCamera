@@ -1,0 +1,7 @@
+1: wait in loop for RADA to send LiDAR data in bulk
+2: collect LiDAR data from RADA
+	i: put into text file
+3: pull list of images from GoPro
+	i: put into html file (sed will parse this)
+4: 
+5: download images off GoPro - put into correct directory
