@@ -82,8 +82,9 @@ fflush( stdout );
 
     /* get distance/width */
     bzero(buf, BUFSIZE);
-    uint32_t dist = 50;
-    uint32_t width = 5;
+    uint16_t dist = 50;
+    uint16_t width = 5;
+    uint16_t done = 1;
     
 //    char *p;
 //    char *d = intToStr(dist);
@@ -98,10 +99,12 @@ fflush( stdout );
 
     char *db = intToStr(dist);
     char *wb = intToStr(width);
+    char *bb = intToStr(done);
 
     printf("db: %s\nwb: %s\n", db, wb);
     
-    strcpy(buf, strcat( strcat(db, "\n"), wb) );
+    //strcpy(buf, strcat( strcat(db, "\n"), wb) );
+    strcpy(buf, strcat( strcat( strcat( strcat(db, "\n"), wb), "\n"), bb) );
   
 
 //strcpy(buf, "abcde");

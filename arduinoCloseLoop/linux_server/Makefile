@@ -1,10 +1,10 @@
 CC = gcc
 ARGS = -Wall
 
-all: tcpserver tcpclient serial
+all: post tcpclient serial
 
-tcpserver: tcpserver.c
-	$(CC) $(ARGS) -o tcpserver tcpserver.c
+post: post.c
+	$(CC) $(ARGS) -o post post.c
 
 tcpclient: tcpclient.c
 	$(CC) $(ARGS) -o tcpclient tcpclient.c
@@ -13,4 +13,4 @@ serial: serial.c
 	$(CC) $(ARGS) -o serial serial.c
 
 clean:
-	rm -f *.o tcpserver tcpclient serial *~
+	rm -f *.o post tcpclient serial *~
