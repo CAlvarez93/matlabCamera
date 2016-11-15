@@ -2,7 +2,10 @@ CC = gcc
 CP = g++
 ARGS = -Wall
 
-all: get_pic post tcpclient serial
+all: sync_data get_pic post tcpclient serial
+
+sync_data: sync_data.c
+	$(CC) $(ARGS) -o sync_data sync_data.c
 
 get_pic: get_pic.cpp
 	$(CP) $(ARGS) -o get_pic -lcurl get_pic.cpp
@@ -17,4 +20,4 @@ serial: serial.c
 	$(CC) $(ARGS) -o serial serial.c
 
 clean:
-	rm -f *.o get_pic post tcpclient serial *~
+	rm -f *.o sync_data get_pic post tcpclient serial *~
