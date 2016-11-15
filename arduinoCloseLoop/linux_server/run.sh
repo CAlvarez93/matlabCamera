@@ -1,5 +1,8 @@
 #! /bin/bash
 #
+## Repo Location
+repo="/home/mdweems/Senior Design/repo/"
+
 ###############################################################################
 ## Communicate with RADA ##
 
@@ -48,7 +51,9 @@ cd ../../angledCameraMethod
 ## Run Image Analysis ##
 
 # run the matlab scripts with this csv as input
-matlab run.m
+echo Running Matlab
+matlab  -r "run $repo/angledCameraMethod/run.m"
+# -nodisplay -nodesktop
 
 ###############################################################################
 ## Store LiDAR data and Images for future reference ##
