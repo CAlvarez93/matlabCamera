@@ -13,7 +13,7 @@ cat dir.html | sed -n 's/.*\(GOPR0[0-9]*.JPG\).*/\1/p' > imglist.txt
 # pull images off the GoPro
 # will create a list of files
 # need to move them to matlab dir
-cat imglist.txt | ./get_pic
+./get_pic
 
 
 # cd to matlab dir
