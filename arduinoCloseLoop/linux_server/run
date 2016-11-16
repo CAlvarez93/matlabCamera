@@ -24,8 +24,6 @@ fi
 ## Globals ##
 
 sys="linux" # values: linux | mac
-matlabmac='/Applications/MATLAB_R2014a.app/bin/matlab -r "run.m"' # mac run matlab
-matlablin='matlab -r "run"' # linux run matlab
 
 if [ "$sys" == "linux" ]; then
 ## Repo Location - LINUX
@@ -44,7 +42,7 @@ if [ "$sys" == "mac" ]; then # ONLY MAC HERE
 
 # wait for RADA to send LiDAR data
 # then shove it into a csv
-./post
+#./post
 
 ###############################################################################
 ## Communicate with GoPro ##
@@ -92,11 +90,11 @@ fi
 echo Running Matlab
 if [ "$sys" == "linux" ]; then
 # Run Matlab - LINUX
-$matlablin
+matlab -r "run" # linux run matlab
 # -nodisplay -nodesktop
 elif [ "$sys" == "mac" ]; then
 # Run Matlab - MAC
-$matlabmac
+/Applications/MATLAB_R2014a.app/bin/matlab -r "run.m" # mac run matlab
 fi
 
 ###############################################################################
