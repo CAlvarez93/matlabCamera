@@ -43,4 +43,4 @@ for arg=1:rows
   fprintf(oid, formatspec, object_height(1), obj_height, a, h, sf, skew_factor, pe, input_dist);
 end
 fclose(oid);
-
+quit;
