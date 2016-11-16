@@ -36,9 +36,9 @@ for arg=1:rows
   [sf, pe ] = sfCheck(h, object_height(1), a, cam_height, skew_factor);
   
   % print object height
-  print_out = sprintf('%d, %d, %d, %d, %d, %d, %d, %d', object_height(1), obj_height, a, h, sf, skew_factor, pe, input_dist);
+  print_out = sprintf(formatspec, object_height(1), obj_height, a, h, sf, skew_factor, pe, input_dist);
 %   print_out = sprintf('%d',h);
-  %disp(print_out);
+  disp(print_out);
 
   fprintf(oid, formatspec, object_height(1), obj_height, a, h, sf, skew_factor, pe, input_dist);
 end

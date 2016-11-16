@@ -5,7 +5,7 @@
 
 ## Decide measurement method ##
 if [ "$#" -eq 0 ]; then
-method="pc"
+method="ac"
 elif [ "$#" -ne 1 ]; then
 echo
 echo 'Invalid Arguments'
@@ -23,7 +23,9 @@ fi
 ###############################################################################
 ## Globals ##
 
-sys="linux" # values: linux | mac
+sys="mac" # values: linux | mac
+ssid_gopro="RADA"
+pswrd_gopro="rada4lyfe"
 
 if [ "$sys" == "linux" ]; then
 ## Repo Location - LINUX
@@ -48,7 +50,7 @@ if [ "$sys" == "mac" ]; then # ONLY MAC HERE
 ## Communicate with GoPro ##
 
 # Connect to GoPro over Wifi
-# TODO
+networksetup -setairportnetwork en0 $ssid_gopro $pswrd_gopro
 
 # pull list of images from GoPro
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" http://10.5.5.9:8080/videos/DCIM/100GOPRO/ > dir.html
@@ -94,7 +96,7 @@ matlab -r "run" # linux run matlab
 # -nodisplay -nodesktop
 elif [ "$sys" == "mac" ]; then
 # Run Matlab - MAC
-/Applications/MATLAB_R2014a.app/bin/matlab -r "run.m" # mac run matlab
+/Applications/MATLAB_R2014a.app/bin/matlab -r "run" # mac run matlab
 fi
 
 ###############################################################################
@@ -115,7 +117,7 @@ mv ../lidar_data.csv $now/lidar_data.csv 2>/dev/null
 cp ../results.csv $now/results.csv
 
 # Archive the data directory
-tar -czf $now.tar $now/
+tar -czf $now.tar.gz $now
 rm -rf $now/
 
 cd ..
