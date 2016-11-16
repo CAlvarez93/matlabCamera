@@ -1,5 +1,9 @@
 #! /bin/bash
 #
+
+## repo location
+repo="/Users/ChristopherAlvarez/Documents/2016-2017/Fall/EE492/matlabCamera/"
+
 ###############################################################################
 ## Communicate with RADA ##
 
@@ -17,15 +21,15 @@
 # TODO
 
 # pull list of images from GoPro
-#curl -i -H "Accept: application/json" -H "Content-Type: application/json" http://10.5.5.9:8080/videos/DCIM/100GOPRO/ > dir.html
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" http://10.5.5.9:8080/videos/DCIM/100GOPRO/ > dir.html
 
 # parse list of images into text file
-#cat dir.html | sed -n 's/.*\(GOPR0[0-9]*.JPG\).*/\1/p' > imglist.txt
+cat dir.html | sed -n 's/.*\(GOPR0[0-9]*.JPG\).*/\1/p' > imglist.txt
 
 # pull images off the GoPro
 # will create a list of files
 # need to move them to matlab dir
-#./get_pic
+./get_pic
 
 ###############################################################################
 ## sync data then move to matlab scripts ##
@@ -45,10 +49,10 @@ cp ld.csv ../../angledCameraMethod/lidar_data.csv
 cd ../../angledCameraMethod
 
 ###############################################################################
-## Run Image Analysis ##
+## Run Image Analysis - Angled Camera ##
 
 # run the matlab scripts with this csv as input
-matlab run.m
+/Applications/MATLAB_R2014a.app/bin/matlab -r "run.m"
 
 ###############################################################################
 ## Store LiDAR data and Images for future reference ##
@@ -69,7 +73,10 @@ mv ../lidar_data.csv $now/lidar_data.csv 2>/dev/null
 cd ..
 
 ###############################################################################
-## Finish up ##
+## Finish and Clean up ##
 
 # cd back to script dir
 cd ../arduinoCloseLoop/linux_server
+
+## Done ##
+###############################################################################
