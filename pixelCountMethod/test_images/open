@@ -1,0 +1,12 @@
+#! /bin/bash
+#
+
+if [ "$#" -ne 1 ]; then
+echo
+echo 'Invalid Arguments'
+echo 'Usage: ./open <tarball>'
+echo
+exit
+fi
+
+tar -xzf $1
