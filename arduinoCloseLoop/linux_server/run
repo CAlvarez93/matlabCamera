@@ -5,7 +5,7 @@
 
 ## Decide measurement method ##
 if [ "$#" -eq 0 ]; then
-method="pc"
+method="ac"
 elif [ "$#" -ne 1 ]; then
 echo
 echo 'Invalid Arguments'
@@ -23,7 +23,9 @@ fi
 ###############################################################################
 ## Globals ##
 
-sys="linux" # values: linux | mac
+sys="mac" # values: linux | mac
+ssid_gopro="RADA"
+pswrd_gopro="rada4lyfe"
 
 if [ "$sys" == "linux" ]; then
 ## Repo Location - LINUX
@@ -32,6 +34,7 @@ elif [ "$sys" == "mac" ]; then
 ## repo location - MAC
 repo="/Users/ChristopherAlvarez/Documents/2016-2017/Fall/EE492/matlabCamera/"
 fi
+
 
 if [ "$sys" == "mac" ]; then # ONLY MAC HERE
 ###############################################################################
@@ -48,13 +51,13 @@ if [ "$sys" == "mac" ]; then # ONLY MAC HERE
 ## Communicate with GoPro ##
 
 # Connect to GoPro over Wifi
-# TODO
+networksetup -setairportnetwork en0 $ssid_gopro $pswrd_gopro
 
 # pull list of images from GoPro
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" http://10.5.5.9:8080/videos/DCIM/100GOPRO/ > dir.html
 
 # parse list of images into text file
-cat dir.html | sed -n 's/.*\(GOPR0[0-9]*.JPG\).*/\1/p' > imglist.txt
+fcat dir.html | sed -n 's/.*\(GOPR0[0-9]*.JPG\).*/\1/p' > imglist.txt
 
 # pull images off the GoPro
 # will create a list of files
@@ -71,7 +74,15 @@ ls -1v *.JPG > jpg_list
 
 # copy images to matlab dir
 if [ "$method" == "pc" ]; then
-echo 'need to implement this'
+find . -name \*.JPG -exec cp {} ../../pixelCountMethod/test_images/ \;
+rm ../../pixelCountMethod/test_images/temp.JPG
+
+# copy lidar_data.csv to matlab dir
+cp ld.csv ../../pixelCountMethod/lidar_data.csv
+
+# cd to matlab dir
+cd ../../pixelCountMethod
+
 elif [ "$method" == "ac" ]; then
 find . -name \*.JPG -exec cp {} ../../angledCameraMethod/test_images/ \;
 rm ../../angledCameraMethod/test_images/temp.JPG
@@ -85,7 +96,7 @@ cd ../../angledCameraMethod
 fi
 
 ###############################################################################
-## Run Image Analysis - Angled Camera ##
+## Run Image Analysis ##
 
 echo Running Matlab
 if [ "$sys" == "linux" ]; then
@@ -94,7 +105,7 @@ matlab -r "run" # linux run matlab
 # -nodisplay -nodesktop
 elif [ "$sys" == "mac" ]; then
 # Run Matlab - MAC
-/Applications/MATLAB_R2014a.app/bin/matlab -r "run.m" # mac run matlab
+/Applications/MATLAB_R2014a.app/bin/matlab -r "run" # mac run matlab
 fi
 
 ###############################################################################
@@ -108,6 +119,11 @@ cd test_images
 mkdir $now 2>/dev/null
 find . -name \*.JPG -exec mv {} $now \;  2>/dev/null
 
+# move plots to new Dir
+if [ "$method" == "pc" ]; then
+find . -name \*.png -exec mv {} $now \;  2>/dev/null
+fi
+
 # move lidar data to new DIR
 mv ../lidar_data.csv $now/lidar_data.csv 2>/dev/null
 
@@ -115,7 +131,7 @@ mv ../lidar_data.csv $now/lidar_data.csv 2>/dev/null
 cp ../results.csv $now/results.csv
 
 # Archive the data directory
-tar -czf $now.tar $now/
+tar -czf $now.tar.gz $now
 rm -rf $now/
 
 cd ..

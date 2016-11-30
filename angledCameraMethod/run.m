@@ -40,6 +40,7 @@ for arg=1:rows
   
   % print object height
   print_out = sprintf('%0.4f, %0.4f, %0.4f, %0.4f, %0.4f, %0.4f, %0.4f, %0.4f', object_height(1), obj_height, a, h, sf, skew_factor, pe, input_dist);
+
 %   print_out = sprintf('%d',h);
   disp(print_out);
 
